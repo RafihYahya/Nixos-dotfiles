@@ -13,6 +13,7 @@
   sysstat
   pciutils
   browsh
+  ghex
   #rustc
   #cargo
  
