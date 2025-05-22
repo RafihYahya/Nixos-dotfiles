@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let 
+     CurrentGPUVm = "PuppyLinux";
+
+in 
 {
 
   boot.kernelModules = [ 
@@ -37,14 +41,14 @@
 }; 
  systemd.services.libvirtd.preStart = ''
    # Copy hook files
-   cp -rf /etc/nixos/libvirtSPGpu/alpinegpu /var/lib/libvirt/hooks/qemu.d
+   cp -rf /etc/nixos/libvirtSPGpu/${CurrentGPUVm} /var/lib/libvirt/hooks/qemu.d
    cp     /etc/nixos/libvirtSPGpu/qemu /var/lib/libvirt/hooks/
    chmod 755 /var/lib/libvirt/hooks
 
    # Make them executable
    chmod +x /var/lib/libvirt/hooks/qemu
-   chmod +x /var/lib/libvirt/hooks/qemu.d/alpinegpu/prepare/begin/start.sh
-   chmod +x /var/lib/libvirt/hooks/qemu.d/alpinegpu/release/end/stop.sh
+   chmod +x /var/lib/libvirt/hooks/qemu.d/${CurrentGPUVm}/prepare/begin/start.sh
+   chmod +x /var/lib/libvirt/hooks/qemu.d/${CurrentGPUVm}/release/end/stop.sh
 
    # Change their groups
    chgrp -R libvirtd /var/lib/libvirt/hooks
