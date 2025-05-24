@@ -20,9 +20,18 @@
     "intel_iommu=on"
     "iommu=pt"
   ];
+  #
+  # boot.kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
+  #
+  boot.extraModprobeConfig = ''
+    options kvm ignore_msrs=1
+  '';
+  
+  # NixSettings.
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = false;
+  
   # Bootloader.
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -37,7 +46,9 @@
   
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = ["nvidia"];
-
+  
+  #Nvidia 
+  
   hardware.nvidia = {
 
     modesetting.enable = true;
@@ -48,7 +59,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   
-##############################################
+  # CustomSystemdServices 
+  
   systemd.user.services.novideo = {
 	name = "nonvidsett";
 	description = "nvidia-settings apply";
@@ -196,16 +208,26 @@
   mesa
   libepoxy
   nix-index
-  OVMF 
+  virtio-win
+  win-spice
+  libarchive
+  cdrtools
+  ntfs3g
   ];
-  environment.gnome.excludePackages = [   pkgs.geary];
+  environment.gnome.excludePackages = [   pkgs.geary ];
   
 
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = ["einsam"];
 
   virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.extraConfig = ''
+    log_filters="1:libvirt 1:qemu"
+    log_outputs="1:file:/var/log/libvirtd.log"
+  '';
   virtualisation.libvirtd.qemu.ovmf.enable = true;
+  virtualisation.libvirtd.qemu.swtpm.enable = false;
+  virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
   virtualisation.libvirtd.qemu.runAsRoot = true;
   virtualisation.libvirtd = {
     onBoot = "ignore";
@@ -213,6 +235,7 @@
   };
   virtualisation.libvirtd.qemu.package = pkgs.qemu_full;
   virtualisation.spiceUSBRedirection.enable = true;
+  services.spice-vdagentd.enable = true;
 
   #### environment.etc."X11/xorg.conf".source =
   #### lib.mkIf (builtins.elem "nvidia" config.services.xserver.videoDrivers) ./xorg.conf;
