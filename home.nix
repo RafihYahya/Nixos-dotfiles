@@ -5,6 +5,7 @@
   home.username = "einsam";
   home.homeDirectory = "/home/einsam";
 
+
   home.packages = with pkgs; [
 
   neofetch
@@ -14,19 +15,28 @@
   pciutils
   browsh
   ghex
-  #rustc
-  #cargo
- 
-  #haskell.compiler.ghc98
-  #haskellPackages.cabal-install
-  #haskellPackages.haskell-language-server
+  rustc
+  cargo
+  brave
+  haskell.compiler.ghc98
+  haskellPackages.cabal-install
+  haskellPackages.haskell-language-server
+
  #
  #  (blender.override {
  #   cudaSupport = true;
  #  })
  #
-  ];
+
+ # EMULATORS/GAMES
+
+ # pcsx2 rpcs3 shadps4 retroarch-full ppsspp 
+ # ryujinx mupen64plus melonDS cemu
+ #
+ 
+ ];
   
+
   home.stateVersion = "24.11";
 
   # Let home Manager install and manage itself.
@@ -53,6 +63,7 @@
    usernamehw.errorlens
    pkief.material-icon-theme
    rust-lang.rust-analyzer
+   jnoortheen.nix-ide
   ];
 
 ##################   
