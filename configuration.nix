@@ -31,7 +31,7 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = false;
-  
+ 
   # Bootloader.
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -213,6 +213,9 @@
   libarchive
   cdrtools
   ntfs3g
+  hdparm
+  gnome-themes-extra
+  f2fs-tools
   ];
   environment.gnome.excludePackages = [   pkgs.geary ];
   
@@ -240,8 +243,7 @@
   #### environment.etc."X11/xorg.conf".source =
   #### lib.mkIf (builtins.elem "nvidia" config.services.xserver.videoDrivers) ./xorg.conf;
   environment.etc."libvirt/qemu.conf".source = ./qemu.conf;
-
-
+  
 # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

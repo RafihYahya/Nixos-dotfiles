@@ -24,6 +24,12 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/var/lib/libvirt/images" =
+    { device = "/dev/disk/by-uuid/a9fdd8c6-c31f-44f9-a6c5-d1240cb5f4f1";
+      fsType = "f2fs";
+      options = [ "compress_algorithm=zstd" "lazytime"];
+    };
+
   swapDevices = [
 
     {

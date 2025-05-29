@@ -21,12 +21,11 @@
   haskell.compiler.ghc98
   haskellPackages.cabal-install
   haskellPackages.haskell-language-server
-
- #
- #  (blender.override {
- #   cudaSupport = true;
- #  })
- #
+ 
+  (blender.override {
+    cudaSupport = true;
+  })
+ 
 
  # EMULATORS/GAMES
 
@@ -89,6 +88,11 @@
         color-scheme = "prefer-dark"; 
        };
     };
-
-
+   
+  qt = {
+   enable = true;
+   style = {
+     name = "adwaita-dark";
+   };
+  };
 }
