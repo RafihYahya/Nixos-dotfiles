@@ -215,18 +215,19 @@
   ntfs3g
   hdparm
   gnome-themes-extra
-  f2fs-tools
+  f2fs-tools  
+  
   ];
+  
   environment.gnome.excludePackages = [   pkgs.geary ];
   
-
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = ["einsam"];
 
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.extraConfig = ''
-    log_filters="1:libvirt 1:qemu"
-    log_outputs="1:file:/var/log/libvirtd.log"
+    log_filters="1:libvirt 1:qemu 1:conf 1:security 3:event 3:json 3:file 3:object 1:util"
+    log_outputs = "1:file:/tmp/libvirtd.log"
   '';
   virtualisation.libvirtd.qemu.ovmf.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = false;
