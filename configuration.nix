@@ -209,8 +209,8 @@
   mesa
   libepoxy
   nix-index
-  virtio-win
-  win-spice
+  # virtio-win
+  # win-spice
   libarchive
   cdrtools
   ntfs3g
