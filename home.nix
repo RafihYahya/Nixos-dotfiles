@@ -49,6 +49,22 @@
  programs.git.userEmail = "rafihyahya@gmail.com";
  
 #################################################
+
+programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "./ssh/id_ed25519";
+      };
+    };
+  };
+
+#################################################
+
+
+
   programs.vscode.enable = true;
   programs.vscode.package = pkgs.vscodium;
   programs.vscode.profiles.default.userSettings = {
