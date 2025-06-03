@@ -12,8 +12,8 @@
             system = "x86_64-linux";
         };
 	glad = pkgs.fetchurl {
-          url = "https://github.com/RafihYahya/C-EXPLORATIONS/blob/Experimental/MODULES/OPENGL/glad.c";
-          sha256 = "sha256-E1FTR0CZuGg/2lnhBDOA/QWUHwzUMnkar+Lu68c5UTQ=";
+          url = "https://raw.githubusercontent.com/RafihYahya/C-EXPLORATIONS/Experimental/MODULES/OPENGL/glad.c";
+          sha256 = "sha256-w34N9MmArTTAVj3tmZWrwq77Ho1SIgt7N0rxCJBnj64=";
         };
     in
         {
