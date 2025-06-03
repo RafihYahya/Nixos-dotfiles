@@ -37,7 +37,7 @@
             ];
 
             shellHook = ''
-		   echo "Glad.c available at: ${myFile}"
+		   echo "Glad.c available at: ${glad}"
 		'';
 
             #LD_LIBRARY_PATH = "${lib.makeLibraryPath buildInputs}";
