@@ -11,10 +11,10 @@
         pkgs = import inputs.nixpkgs {
             system = "x86_64-linux";
         };
-	glad = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/RafihYahya/C-EXPLORATIONS/Experimental/MODULES/OPENGL/glad.c";
-          sha256 = "sha256-w34N9MmArTTAVj3tmZWrwq77Ho1SIgt7N0rxCJBnj64=";
-        };
+	#glad = pkgs.fetchurl {
+        #  url = "https://raw.githubusercontent.com/RafihYahya/C-EXPLORATIONS/Experimental/MODULES/OPENGL/glad.c";
+        #  sha256 = "sha256-w34N9MmArTTAVj3tmZWrwq77Ho1SIgt7N0rxCJBnj64=";
+        #};
     in
         {
         devShells.x86_64-linux.default = pkgs.mkShell rec {
@@ -37,12 +37,10 @@
             ];
 
             shellHook = ''
-		   echo "Glad.c available at: ${glad}"
+		
 		'';
 
             #LD_LIBRARY_PATH = "${lib.makeLibraryPath buildInputs}";
-            #VK_LAYER_PATH = "${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d";
-            #VULKAN_SDK = "${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d";
             #XDG_DATA_DIRS = builtins.getEnv "XDG_DATA_DIRS";
             #XDG_RUNTIME_DIR = "/run/user/1000";
         };
