@@ -116,12 +116,13 @@
     address = "10.0.0.20";
     prefixLength = 24;
   }];  
+/*
   services.avahi = {
 	enable = true;
 	nssmdns4 = true;
 	openFirewall = true;
   };
-
+*/
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
