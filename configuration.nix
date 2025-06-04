@@ -110,9 +110,17 @@
 
   networking.dhcpcd.extraConfig = "nohook resolv.conf";
   networking.networkmanager.dns = "none";
+  #services.nfs.server.enable = true;
+  
+  services.avahi = {
+	enable = true;
+	nssmdns4 = true;
+	openFirewall = true;
+  };
+
 
   # Set your time zone.
-  time.timeZone = "Europe/Berlin";
+  time.timeZone = "Europe/Amsterdam";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "de_DE.UTF-8";
@@ -199,24 +207,13 @@
   environment.systemPackages = with pkgs; [
   
   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  wget
-  git
-  git-filter-repo
-  gnome-terminal
-  mpv
-  btop
-  glxinfo
-  mesa
-  libepoxy
-  nix-index
-  # virtio-win
-  # win-spice
-  libarchive
-  cdrtools
-  ntfs3g
-  hdparm
+  wget git git-filter-repo
+  gnome-terminal mpv btop
+  glxinfo mesa libepoxy nix-index
+  # virtio-win win-spice
+  libarchive cdrtools ntfs3g hdparm
   gnome-themes-extra
-  f2fs-tools  
+  f2fs-tools  nfs-utils
   
   ];
   
@@ -226,10 +223,10 @@
   users.groups.libvirtd.members = ["einsam"];
 
   virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.extraConfig = ''
-    log_filters="1:libvirt 1:qemu 1:conf 1:security 3:event 3:json 3:file 3:object 1:util"
-    log_outputs = "1:file:/tmp/libvirtd.log"
-  '';
+  #virtualisation.libvirtd.extraConfig = ''
+  #  log_filters="1:libvirt 1:qemu 1:conf 1:security 3:event 3:json 3:file 3:object 1:util"
+  #  log_outputs = "1:file:/tmp/libvirtd.log"
+  #'';
   virtualisation.libvirtd.qemu.ovmf.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = false;
   virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
@@ -260,8 +257,8 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  # networking.firewall.allowedTCPPorts = [ 2049 ];
+  # networking.firewall.allowedUDPPorts = [ 5353 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
