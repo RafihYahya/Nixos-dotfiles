@@ -111,7 +111,11 @@
   networking.dhcpcd.extraConfig = "nohook resolv.conf";
   networking.networkmanager.dns = "none";
   #services.nfs.server.enable = true;
-  
+  networking.interfaces.enp2s0.useDHCP = false;
+  networking.interfaces.enp2s0.ipv4.addresses = [{
+    address = "10.0.0.20";
+    prefixLength = 24;
+  }];  
   services.avahi = {
 	enable = true;
 	nssmdns4 = true;
