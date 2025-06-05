@@ -1,8 +1,28 @@
 { config, pkgs, ... }:
 
 let 
-     CurrentGPUVm = "PuppyLinux";
+     CurrentGPUVm = [ "ThoriumOSGPU" ];
 
+
+     vmSpecificScripts = map (vmName: 
+     ''
+      # Copy hook files
+       	mkdir -p /var/lib/libvirt/hooks/qemu.d/${vmName}/{prepare/begin,release/end}
+	cp /etc/nixos/libvirtSPGpu/start.sh /var/lib/libvirt/hooks/qemu.d/${vmName}/prepare/begin/
+	cp /etc/nixos/libvirtSPGpu/stop.sh  /var/lib/libvirt/hooks/qemu.d/${vmName}/release/end/
+       
+        chmod +x /var/lib/libvirt/hooks/qemu.d/${vmName}/prepare/begin/start.sh
+        chmod +x /var/lib/libvirt/hooks/qemu.d/${vmName}/release/end/stop.sh
+      ''
+     ) CurrentGPUVm;
+     vmGeneralScript = ''
+        cp  /etc/nixos/libvirtSPGpu/qemu /var/lib/libvirt/hooks/
+        chmod 755 /var/lib/libvirt/hooks
+        # Make them executable
+        chmod +x /var/lib/libvirt/hooks/qemu
+        ${(builtins.concatStringsSep "\n" vmSpecificScripts)}
+        chgrp -R libvirtd /var/lib/libvirt/hooks
+     '';
 in 
 {
 
@@ -39,19 +59,6 @@ in
            [ env ];
 
 }; 
- systemd.services.libvirtd.preStart = ''
-   # Copy hook files
-   cp -rf /etc/nixos/libvirtSPGpu/${CurrentGPUVm} /var/lib/libvirt/hooks/qemu.d
-   cp     /etc/nixos/libvirtSPGpu/qemu /var/lib/libvirt/hooks/
-   chmod 755 /var/lib/libvirt/hooks
-
-   # Make them executable
-   chmod +x /var/lib/libvirt/hooks/qemu
-   chmod +x /var/lib/libvirt/hooks/qemu.d/${CurrentGPUVm}/prepare/begin/start.sh
-   chmod +x /var/lib/libvirt/hooks/qemu.d/${CurrentGPUVm}/release/end/stop.sh
-
-   # Change their groups
-   chgrp -R libvirtd /var/lib/libvirt/hooks
-'';
+ systemd.services.libvirtd.preStart = vmGeneralScript;
 
 }
